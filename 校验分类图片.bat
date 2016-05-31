@@ -1,2 +1,2 @@
-java -Dfile.encoding=GBK -jar ModifyZipName.jar  verify category
+java -Dfile.encoding=GBK -jar VerifyCategoryPic.jar  verify category
 pause
