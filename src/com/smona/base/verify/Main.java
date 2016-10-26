@@ -12,20 +12,26 @@ public class Main {
             return;
         }
 
-        if (args.length != 2) {
-            Logger.printReport("参数不对");
-            return;
-        }
+        // if (args.length != 2) {
+        // Logger.printReport("参数不对");
+        // return;
+        // }
+        //
+        // if ("zip".equals(args[0])) {
+        // // 打包分类
+        // String category = currFilePath + "/" + args[1];
+        // zipCategory(category);
+        // } else {
+        // // 分类文件夹根目录
+        // String category = currFilePath + "/" + args[1];
+        // verifyCategory(category);
+        // }
 
-        if ("zip".equals(args[0])) {
-            // 打包分类
-            String category = currFilePath + "/" + args[1];
-            zipCategory(category);
-        } else {
-            // 分类文件夹根目录
-            String category = currFilePath + "/" + args[1];
-            verifyCategory(category);
-        }
+         String category = currFilePath + "/" + "category";
+         zipCategory(category);
+
+//        String category = currFilePath + "/" + "category";
+//        verifyCategory(category);
     }
 
     private static void zipCategory(String category) {
@@ -50,11 +56,13 @@ public class Main {
         if (!verifyName) {
             return;
         }
+        Logger.printReport("分类名称及个数OK");
+
         verifyName = versifyCategoryEveryName(category);
         if (!verifyName) {
             return;
         }
-        Logger.printReport("分类OK");
+        Logger.printReport("每个分类里面的图片分辨率、大小都OK");
     }
 
     private static boolean versifyCategoryName(String category) {
@@ -117,20 +125,45 @@ public class Main {
                 if (resolution.equals(childName)) {
                     File resolutionFile = new File(categoryName + "/"
                             + resolution);
+                    System.out.println("");
                     picName = resolutionFile.list();
                     if (picName == null) {
                     } else if (isNew && picName.length == 1) {
+
+                        // 验证category.jpg的分辨率
                         matchName = "category.jpg".equals(picName[0]);
+                        String filePath = categoryName + File.separator
+                                + resolution + File.separator + "category.jpg";
+                        int[] cor = ValidateImageFormat.getImageWAndH(filePath);
+                        System.out.println("File: " + filePath + "; ]" + cor[0]
+                                + "," + cor[1] + "],[" + resolution + "]");
+                        matchName &= resolution.equals(cor[0] + "x" + cor[1]);
+
                     } else if (!isNew && picName.length == 2) {
+                        // 验证category.jpg的分辨率
                         matchName = "category.jpg".equals(picName[0]);
+                        String filePath = categoryName + File.separator
+                                + resolution + File.separator + "category.jpg";
+                        int[] cor = ValidateImageFormat.getImageWAndH(filePath);
+                        System.out.println("File: " + filePath + "; ]" + cor[0]
+                                + "," + cor[1] + "],[" + resolution + "]");
+                        matchName &= resolution.equals(cor[0] + "x" + cor[1]);
+
+                        // 验证description.jpg的分辨率
                         matchName &= "description.jpg".equals(picName[1]);
+                        filePath = categoryName + File.separator + resolution
+                                + File.separator + "description.jpg";
+                        cor = ValidateImageFormat.getImageWAndH(filePath);
+                        System.out.println("File: " + filePath + "; ]" + cor[0]
+                                + "," + cor[1] + "],[" + resolution + "]");
+                        matchName &= resolution.equals(cor[0] + "x" + cor[1]);
                     }
                     break;
                 }
             }
             if (!matchName) {
                 Logger.printReport("分类[" + categoryName + "]下的分辨率["
-                        + resolution + "]里缺少缺少图片");
+                        + resolution + "]里缺少图片");
             }
         }
         return true;

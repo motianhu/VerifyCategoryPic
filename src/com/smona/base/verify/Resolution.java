@@ -2,7 +2,7 @@ package com.smona.base.verify;
 
 public class Resolution {
     public static String[] category = new String[] { "AQ", "CY", "DC", "DW",
-            "ET", "FJ", "HD", "KX", "RW", "TY", "WH", "RM" };
+            "ET","HD", "JR","JW","JY","JZ",  "KX","QC", "RM", "RW", "TY", "ZR"};
 
     public static String[] category407Resolution = new String[] { "150x50",
             "240x80", "360x120", "480x160", "540x180", "720x240", "1080x360",
